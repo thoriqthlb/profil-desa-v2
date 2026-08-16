@@ -113,9 +113,9 @@
                                     </p>
 
                                     <div class="mt-auto">
-                                        <button class="btn btn-village btn-sm">
-                                            Baca selengkapnya
-                                            <i class="fa-solid fa-arrow-right"></i>
+                                        <a href="{{ route('artikel.show', $artikel->slug) }}" class="btn btn-village btn-sm">
+                                            Baca selengkapnya <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
                                         </button>
                                     </div>
                                 </div>
