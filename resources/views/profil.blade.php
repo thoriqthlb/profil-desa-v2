@@ -132,12 +132,6 @@
                             <p class="mb-0"><i class="fa-solid fa-phone me-2"></i> {{ $profil->kontak }}</p>                        
                         </div>
                     </div>
-                        <div class="eyebrow mb-2">Arah Desa</div>
-                        <h2 class="serif mb-4">Visi & Misi</h2>
-                        <div class="text-muted" style="line-height:1.9; font-size:1.05rem;">
-                            {!! $profil->visi_misi ?? '<p class="fst-italic">Data visi dan misi belum ditambahkan ke dalam sistem.</p>' !!}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
