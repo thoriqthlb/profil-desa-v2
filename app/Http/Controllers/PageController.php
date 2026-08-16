@@ -29,9 +29,21 @@ class PageController extends Controller
         return view('artikel', compact('artikels'));
     }
 
+    public function artikelShow($slug)
+    {
+        $artikel = Artikel::where('slug', $slug)->where('is_published', true)->firstOrFail();
+        return view('artikel-detail', compact('artikel'));
+    }
+
     public function potensiDesa()
     {
         $potensis = PotensiDesa::latest()->paginate(9);
         return view('potensi-desa', compact('potensis'));
+    }
+
+    public function potensiDesaShow($id)
+    {
+        $potensi = PotensiDesa::findOrFail($id);
+        return view('potensi-desa-detail', compact('potensi'));
     }
 }
