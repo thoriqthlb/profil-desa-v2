@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PerangkatDesa extends Model
 {
-    //
+    protected $fillable = [
+        'nama',
+        'jabatan',
+        'foto',
+    ];
 }
