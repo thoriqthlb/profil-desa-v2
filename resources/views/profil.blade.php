@@ -120,6 +120,21 @@
                         <div class="eyebrow mb-2">Arah Desa</div>
                         <h2 class="serif mb-4">Visi & Misi</h2>
                         <div class="text-muted" style="line-height:1.9; font-size:1.05rem;">
+                            
+                            <h5 class="fw-bold text-dark mb-1">Visi</h5>
+                            <p>{{ $profil->visi }}</p>
+                            
+                            <h5 class="fw-bold text-dark mt-4 mb-1">Misi</h5>
+                            <p>{!! nl2br(e($profil->misi)) !!}</p>
+                            
+                            <hr class="my-4">
+                            <h5 class="fw-bold text-dark mb-2">Kontak Desa</h5>
+                            <p class="mb-0"><i class="fa-solid fa-phone me-2"></i> {{ $profil->kontak }}</p>                        
+                        </div>
+                    </div>
+                        <div class="eyebrow mb-2">Arah Desa</div>
+                        <h2 class="serif mb-4">Visi & Misi</h2>
+                        <div class="text-muted" style="line-height:1.9; font-size:1.05rem;">
                             {!! $profil->visi_misi ?? '<p class="fst-italic">Data visi dan misi belum ditambahkan ke dalam sistem.</p>' !!}
                         </div>
                     </div>

@@ -81,7 +81,11 @@
         <div class="row g-4">
             @forelse ($potensis as $index => $potensi)
                 <div class="col-lg-4 col-md-6">
-                    <article class="potensi-card text-start">
+                    <a href="{{ route('potensi-desa.show', $potensi->id) }}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                        <article class="potensi-card text-start">
+                            <!-- Kode gambar dan isi kartu potensi biarkan tetap di sini -->
+                        </article>
+                    </a>
                         @if($potensi->gambar)
                             <img src="{{ Storage::url($potensi->gambar) }}" class="potensi-img" alt="{{ $potensi->nama_potensi }}">
                         @else
