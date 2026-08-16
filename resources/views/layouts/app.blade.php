@@ -313,7 +313,7 @@
                     </p>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-7 col-md-6">
                     <h5>Lokasi</h5>
                     <div class="footer-info">
                         <i class="fa-solid fa-location-dot me-2"></i>
@@ -321,17 +321,6 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
-                    <h5>Hubungi Kami</h5>
-                    <div class="footer-info mb-2">
-                        <i class="fa-solid fa-phone me-2"></i>
-                        {{ $profilFooter->kontak ?? 'Belum ada kontak' }}
-                    </div>
-                    <div class="footer-info">
-                        <i class="fa-solid fa-envelope me-2"></i>
-                        pemdes@wiramastra.desa.id
-                    </div>
-                </div>
             </div>
 
             <hr class="border-secondary opacity-25 my-5">
