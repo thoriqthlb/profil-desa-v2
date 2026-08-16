@@ -142,33 +142,33 @@
 <!-- 1. HERO SECTION DENGAN SLIDESHOW -->
 <section class="home-hero">
     <div id="heroSlideshow" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-pause="false" data-bs-interval="4000">
-        <!-- Tambahan indikator menjadi 5 -->
+        
+        <!-- Indikator Dinamis -->
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#heroSlideshow" data-bs-slide-to="0" class="active" aria-current="true"></button>
-            <button type="button" data-bs-target="#heroSlideshow" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#heroSlideshow" data-bs-slide-to="2"></button>
-            <button type="button" data-bs-target="#heroSlideshow" data-bs-slide-to="3"></button>
-            <button type="button" data-bs-target="#heroSlideshow" data-bs-slide-to="4"></button>
+            @forelse($artikelTerbaru->take(5) as $index => $artikel)
+                <button type="button" data-bs-target="#heroSlideshow" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}"></button>
+            @empty
+                <button type="button" data-bs-target="#heroSlideshow" data-bs-slide-to="0" class="active" aria-current="true"></button>
+            @endforelse
         </div>
 
+        <!-- Gambar Carousel Dinamis -->
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{ asset('images/sejarah.jpg') }}" class="hero-photo" alt="Slide 1" onerror="this.src='https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=1200&auto=format&fit=crop'">
-            </div>
-            <div class="carousel-item">
-                <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1200&auto=format&fit=crop" class="hero-photo" alt="Slide 2">
-            </div>
-            <div class="carousel-item">
-                <img src="https://images.unsplash.com/photo-1541944743827-e04aa6427c33?q=80&w=1200&auto=format&fit=crop" class="hero-photo" alt="Slide 3">
-            </div>
-            <!-- Tambahan Slide 4 -->
-            <div class="carousel-item">
-                <img src="https://images.unsplash.com/photo-1529156069898-49953eb1b5ce?q=80&w=1200&auto=format&fit=crop" class="hero-photo" alt="Slide 4">
-            </div>
-            <!-- Tambahan Slide 5 -->
-            <div class="carousel-item">
-                <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=1200&auto=format&fit=crop" class="hero-photo" alt="Slide 5">
-            </div>
+            @forelse($artikelTerbaru->take(5) as $index => $artikel)
+                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                    @if($artikel->gambar)
+                        <img src="{{ Storage::url($artikel->gambar) }}" class="hero-photo" alt="{{ $artikel->judul }}">
+                    @else
+                        <!-- Fallback jika artikel tidak memiliki gambar -->
+                        <img src="{{ asset('images/logo.png') }}" class="hero-photo" alt="Logo Desa" style="object-fit: contain; background-color: #28382d; padding: 100px;">
+                    @endif
+                </div>
+            @empty
+                <!-- Fallback jika tidak ada artikel sama sekali di database -->
+                <div class="carousel-item active">
+                    <img src="{{ asset('images/sejarah.jpg') }}" class="hero-photo" alt="Desa Wiramastra">
+                </div>
+            @endforelse
         </div>
     </div>
 
@@ -375,12 +375,35 @@
         </div>
 
         <div class="row g-4">
-            <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600&auto=format&fit=crop" alt="Kegiatan Desa"></div></div>
-            <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=600&auto=format&fit=crop" alt="Kegiatan Desa"></div></div>
-            <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="https://images.unsplash.com/photo-1529156069898-49953eb1b5ce?q=80&w=600&auto=format&fit=crop" alt="Kegiatan Desa"></div></div>
-            <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="https://images.unsplash.com/photo-1541944743827-e04aa6427c33?q=80&w=600&auto=format&fit=crop" alt="Kegiatan Desa"></div></div>
-            <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=600&auto=format&fit=crop" alt="Kegiatan Desa"></div></div>
-            <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=600&auto=format&fit=crop" alt="Kegiatan Desa"></div></div>
+            @php
+                // Mengumpulkan gambar asli dari Potensi dan Artikel
+                $galeriImages = collect();
+                
+                if(isset($potensiUnggulan)) {
+                    foreach($potensiUnggulan as $p) { 
+                        if($p->gambar) $galeriImages->push(['url' => Storage::url($p->gambar), 'title' => $p->nama_potensi]); 
+                    }
+                }
+                
+                if(isset($artikelTerbaru)) {
+                    foreach($artikelTerbaru as $a) { 
+                        if($a->gambar) $galeriImages->push(['url' => Storage::url($a->gambar), 'title' => $a->judul]); 
+                    }
+                }
+            @endphp
+
+            @forelse ($galeriImages->take(6) as $img)
+                <div class="col-md-4 col-sm-6">
+                    <div class="gallery-item">
+                        <img src="{{ $img['url'] }}" alt="{{ $img['title'] }}">
+                    </div>
+                </div>
+            @empty
+                <div class="col-12 text-center text-muted py-5">
+                    <i class="fa-solid fa-image fa-3x mb-3 text-light"></i>
+                    <p>Belum ada foto galeri.</p>
+                </div>
+            @endforelse
         </div>
     </div>
 </section>
