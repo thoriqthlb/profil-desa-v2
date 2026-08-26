@@ -18,7 +18,7 @@
         
         <div class="col-lg-8">
             <div class="content text-muted" style="line-height: 1.8; font-size: 1.1rem; text-align: justify;">
-                {{ $potensi->deskripsi }}
+                {!! nl2br(e($potensi->deskripsi)) !!}
             </div>
         </div>
     </div>

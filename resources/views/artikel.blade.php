@@ -6,7 +6,7 @@
 <style>
     .page-hero {
         padding: 170px 0 75px;
-        background: #eef1eb;
+        background: #e4ffdb;
     }
 
     .page-hero h1 {
@@ -105,18 +105,12 @@
                                     <div class="article-date mb-3">
                                         {{ $artikel->created_at->translatedFormat('d F Y') }}
                                     </div>
-
-                                    <h2 class="article-title mb-3">{{ $artikel->judul }}</h2>
-
-                                    <p class="text-muted mb-4" style="line-height:1.8;">
-                                        {!! Str::limit(strip_tags($artikel->konten), 220) !!}
-                                    </p>
-
+                                
+                                    <h2 class="article-title mb-4">{{ $artikel->judul }}</h2>
                                     <div class="mt-auto">
                                         <a href="{{ route('artikel.show', $artikel->slug) }}" class="btn btn-village btn-sm">
                                             Baca selengkapnya <i class="fa-solid fa-arrow-right"></i>
                                         </a>
-                                        </button>
                                     </div>
                                 </div>
                             </div>

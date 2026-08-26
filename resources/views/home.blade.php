@@ -321,7 +321,7 @@
         </div>
 
         <div class="text-center mt-5">
-            <a href="#" class="btn btn-outline-success rounded-pill px-4">Semua kabar <i class="fa-solid fa-arrow-right ms-1"></i></a>
+            <a href="{{ route('artikel') }}" class="btn btn-outline-success rounded-pill px-4">Semua kabar <i class="fa-solid fa-arrow-right ms-1"></i></a>
         </div>
     </div>
 </section>
@@ -357,7 +357,7 @@
         </div>
 
         <div class="text-center mt-5">
-            <a href="#" class="btn btn-outline-success rounded-pill px-4">Lihat semua <i class="fa-solid fa-arrow-right ms-1"></i></a>
+            <a href="{{ route('potensi-desa') }}" class="btn btn-outline-success rounded-pill px-4">Lihat semua <i class="fa-solid fa-arrow-right ms-1"></i></a>
         </div>
     </div>
 </section>
@@ -395,7 +395,7 @@
             @forelse ($galeriImages->take(6) as $img)
                 <div class="col-md-4 col-sm-6">
                     <div class="gallery-item">
-                        <img src="{{ $img['url'] }}" alt="{{ $img['title'] }}">
+                        <a href="{{ $img['url'] }}" target="_blank"><img src="{{ $img['url'] }}" alt="{{ $img['title'] }}"></a>
                     </div>
                 </div>
             @empty

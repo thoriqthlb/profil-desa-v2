@@ -19,6 +19,8 @@ class PerangkatDesaResource extends Resource
     protected static ?string $model = PerangkatDesa::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $modelLabel = 'Perangkat Desa';
+    protected static ?string $pluralModelLabel = 'Perangkat Desa';
 
     public static function form(Schema $schema): Schema
     {

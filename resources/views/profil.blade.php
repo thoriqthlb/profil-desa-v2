@@ -8,7 +8,7 @@
         padding: 170px 0 110px;
         background:
             radial-gradient(circle at 80% 20%, rgba(169,184,163,.55), transparent 30%),
-            #eef1eb;
+            #e4ffdb;
     }
 
     .profile-hero h1 {
@@ -16,7 +16,7 @@
         font-weight: 700;
         letter-spacing: -.02em;
         font-size: clamp(3.2rem, 7vw, 5.5rem);
-        line-height: 1.1; 
+        line-height: 1.1;
     }
 
     .profile-intro {
@@ -25,66 +25,76 @@
         z-index: 2;
     }
 
-    .leader-photo {
-        width: 230px;
-        height: 285px;
-        border-radius: 22px;
-        overflow: hidden;
-        background: #e8ece6;
-        border: 8px solid #fff;
-        box-shadow: var(--shadow);
-        margin: auto;
+    .vision-box {
+        padding: 42px;
     }
 
-    .leader-photo img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+    .misi-list {
+        list-style: none;
+        counter-reset: misi-counter;
+        padding-left: 0;
+        margin: 0;
     }
 
-    .leader-placeholder {
-        width: 100%;
-        height: 100%;
+    .misi-list li {
+        counter-increment: misi-counter;
+        position: relative;
+        padding-left: 40px;
+        margin-bottom: 16px;
+        line-height: 1.75;
+    }
+
+    .misi-list li::before {
+        content: counter(misi-counter);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--sage);
+        color: #fff;
+        font-weight: 700;
+        font-size: .8rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #8d9890;
-    }
-
-    .vision-box {
-        padding: 42px;
-        height: 100%;
-    }
-
-    .quote-mark {
-        color: var(--sage);
-        font-family: 'Playfair Display', serif;
-        font-size: 5rem;
-        line-height: .5;
     }
 
     .history-box {
         padding: 42px;
     }
-    
-    .position-pill {
-        display: inline-block;
-        color: var(--green);
-        background: #eef2ec;
-        border-radius: 999px;
-        padding: 7px 13px;
-        font-size: .8rem;
-        font-weight: 600;
+
+    .history-photo {
+        width: 100%;
+        height: 100%;
+        min-height: 320px;
+        border-radius: 18px;
+        overflow: hidden;
+        background: #e8ece6;
+    }
+
+    .history-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .history-placeholder {
+        width: 100%;
+        height: 100%;
+        min-height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #8d9890;
+        background: #e8ece6;
+        border-radius: 18px;
     }
 </style>
 @endpush
 
 @section('content')
-@php
-    $kepalaDesa = $perangkat->filter(function($item) {
-        return stripos($item->jabatan, 'kepala') !== false;
-    })->first();
-@endphp
 
 <section class="profile-hero text-center">
     <div class="container d-flex flex-column align-items-center">
@@ -101,56 +111,54 @@
     <div class="container">
         <!-- Visi Misi -->
         <div class="soft-card p-4 p-lg-5">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-4 text-center">
-                    <div class="leader-photo">
-                        @if($kepalaDesa && $kepalaDesa->foto)
-                            <img src="{{ Storage::url($kepalaDesa->foto) }}" alt="Kepala Desa">
-                        @else
-                            <div class="leader-placeholder"><i class="fa-solid fa-user-tie fa-5x"></i></div>
-                        @endif
-                    </div>
+            <div class="vision-box">
+                <div class="eyebrow mb-2 text-center">Arah Desa</div>
+                <h2 class="serif mb-4 text-center">Visi & Misi</h2>
 
-                    <h4 class="mt-4 mb-1">{{ $kepalaDesa->nama ?? 'MUTHOWIM' }}</h4>
-                    <span class="position-pill">{{ $kepalaDesa->jabatan ?? 'Kepala Desa' }}</span>
-                </div>
+                <div class="mx-auto" style="max-width: 800px;">
+                    <h5 class="fw-bold text-dark mb-2">Visi</h5>
+                    <p class="text-muted mb-4" style="line-height:1.9; font-size:1.05rem;">{{ $profil->visi }}</p>
 
-                <div class="col-lg-8">
-                    <div class="vision-box">
-                        <div class="eyebrow mb-2">Arah Desa</div>
-                        <h2 class="serif mb-4">Visi & Misi</h2>
-                        <div class="text-muted" style="line-height:1.9; font-size:1.05rem;">
-                            
-                            <h5 class="fw-bold text-dark mb-1">Visi</h5>
-                            <p>{{ $profil->visi }}</p>
-                            
-                            <h5 class="fw-bold text-dark mt-4 mb-1">Misi</h5>
-                            <p>{!! nl2br(e($profil->misi)) !!}</p>
-                            
-                            <hr class="my-4">
-                            <h5 class="fw-bold text-dark mb-2">Kontak Desa</h5>
-                            <p class="mb-0"><i class="fa-solid fa-phone me-2"></i> {{ $profil->kontak }}</p>                        
-                        </div>
-                    </div>
+                    <h5 class="fw-bold text-dark mb-3">Misi</h5>
+                    <ol class="misi-list text-muted" style="font-size:1.05rem;">
+                        @foreach(preg_split('/\r\n|\r|\n/', trim($profil->misi ?? '')) as $baris)
+                            @php $baris = trim(preg_replace('/^\d+\.\s*/', '', $baris)); @endphp
+                            @if($baris !== '')
+                                <li>{{ $baris }}</li>
+                            @endif
+                        @endforeach
+                    </ol>
                 </div>
             </div>
         </div>
 
         <!-- Sejarah -->
-        <div class="soft-card history-box mt-4 text-center">
-            <div class="d-flex flex-column align-items-center">
-                <div class="eyebrow mb-2">Sejarah Desa</div>
-                <h3 class="mt-1 mb-4" style="font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -.02em;">Dari mana kami berasal.</h3>
-                
-                <div class="text-muted" style="line-height:1.95; text-align:justify; max-width: 900px;">
-                    {!! $profil->sejarah_singkat ?? '<p class="text-center">Belum ada data sejarah.</p>' !!}
+        <div class="soft-card history-box mt-4">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-5">
+                    @if($profil->logo)
+                        <div class="history-photo">
+                            <img src="{{ Storage::url($profil->logo) }}" alt="{{ $profil->nama_desa }}">
+                        </div>
+                    @else
+                        <div class="history-placeholder">
+                            <i class="fa-solid fa-landmark fa-4x"></i>
+                        </div>
+                    @endif
+                </div>
+                <div class="col-lg-7">
+                    <div class="eyebrow mb-2">Sejarah Desa</div>
+                    <h3 class="mb-4" style="font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -.02em;">Dari mana kami berasal.</h3>
+                    <div class="text-muted" style="line-height:1.95;">
+                        {!! $profil->sejarah_singkat ?? '<p>Belum ada data sejarah.</p>' !!}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Pemerintahan Desa: Diubah menggunakan gambar struktur organisasi -->
+<!-- Pemerintahan Desa -->
 <section class="page-section" style="background:#eef1eb;">
     <div class="container text-center">
         <div class="section-heading mx-auto mb-5">
@@ -162,8 +170,24 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="soft-card p-4 bg-white" style="border-radius: 24px; box-shadow: var(--shadow);">
-                    <!-- Pastikan gambar struktur-organisasi.png sudah kamu upload -->
-                    <img src="{{ asset('storage/Struktur Anggota DesaWiramastra.png') }}" alt="Struktur Organisasi Pemerintahan Desa Wiramastra" class="img-fluid" style="border-radius: 12px; width: 100%;">
+                    <img src="{{ asset('images/Struktur Organisasi DesaWiramastra.png') }}" alt="Struktur Organisasi Pemerintahan Desa Wiramastra" class="img-fluid" style="border-radius: 12px; width: 100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page-section" style="background:#eef1eb;">
+    <div class="container">
+        <div class="section-heading text-center mx-auto mb-5">
+            <div class="eyebrow mb-2">Dokumen Resmi</div>
+            <h2 style="font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -.02em;">Buku Profil Desa</h2>
+            <p class="text-muted mx-auto" style="max-width: 600px;">Jelajahi buku profil lengkap Desa Wiramastra secara digital.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="soft-card p-3 bg-white" style="border-radius: 24px; box-shadow: var(--shadow); overflow: hidden;">
+                    <iframe allowfullscreen="allowfullscreen" allow="autoplay; fullscreen; clipboard-write" scrolling="no" class="fp-iframe" src="https://heyzine.com/flip-book/41fbfea263.html" style="border: 0; width: 100%; height: 500px; border-radius: 12px;"></iframe>
                 </div>
             </div>
         </div>
@@ -176,13 +200,11 @@
         <div class="section-heading text-center mx-auto mb-5">
             <h2 style="font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -.02em;">Peta Lokasi Desa</h2>
         </div>
-        
+
         <div class="row g-4">
-            <!-- Kolom Kiri: Informasi Peta -->
             <div class="col-lg-5">
                 <div class="soft-card p-4 p-lg-5 h-100 d-flex flex-column justify-content-center">
                     <h5 class="fw-bold mb-4 text-dark">Batas Desa:</h5>
-                    
                     <div class="row mb-4">
                         <div class="col-6">
                             <div class="fw-bold text-dark mb-1">Utara</div>
@@ -193,7 +215,6 @@
                             <div class="text-uppercase text-muted" style="font-size: 0.9rem;">MAJALENGKA & KEBONDALEM</div>
                         </div>
                     </div>
-                    
                     <div class="row mb-4">
                         <div class="col-6">
                             <div class="fw-bold text-dark mb-1">Selatan</div>
@@ -204,16 +225,12 @@
                             <div class="text-uppercase text-muted" style="font-size: 0.9rem;">PUCUNG BEDUG</div>
                         </div>
                     </div>
-
                     <hr class="my-3" style="border-color: var(--line);">
-
                     <div class="d-flex justify-content-between align-items-center py-2">
                         <h5 class="fw-bold mb-0 text-dark">Luas Desa:</h5>
                         <div class="fs-6 text-dark" style="font-weight: 600;">2.784.932 m&sup2;</div>
                     </div>
-
                     <hr class="my-3" style="border-color: var(--line);">
-
                     <div class="d-flex justify-content-between align-items-center py-2">
                         <h5 class="fw-bold mb-0 text-dark">Jumlah Penduduk:</h5>
                         <div class="fs-6 text-dark" style="font-weight: 600;">3.066 Jiwa</div>
@@ -221,16 +238,15 @@
                 </div>
             </div>
 
-            <!-- Kolom Kanan: Peta Google Maps -->
             <div class="col-lg-7">
                 <div class="soft-card h-100 overflow-hidden p-0" style="min-height: 450px; border-radius: var(--radius);">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31649.0309193856!2d109.62061034444583!3d-7.449646581454179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7aa0563fa156cd%3A0x5027a76e3569940!2sWiramastra%2C%20Bawang%2C%20Banjarnegara%20Regency%2C%20Central%20Java!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0; min-height: 450px;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31649.0309193856!2d109.62061034444583!3d-7.449646581454179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7aa0563fa156cd%3A0x5027a76e3569940!2sWiramastra%2C%20Bawang%2C%20Banjarnegara%20Regency%2C%20Central%20Java!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
+                        width="100%"
+                        height="100%"
+                        style="border:0; min-height: 450px;"
+                        allowfullscreen=""
+                        loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>

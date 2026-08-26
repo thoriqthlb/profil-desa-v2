@@ -14,8 +14,8 @@
                 <img src="{{ Storage::url($artikel->gambar) }}" alt="{{ $artikel->judul }}" class="img-fluid rounded mb-4 w-100" style="object-fit: cover; max-height: 450px;">
             @endif
 
-            <div class="content text-muted" style="line-height: 1.8; font-size: 1.1rem;">
-                {!! $artikel->konten !!}
+            <div class="content text-muted" style="line-height: 1.8; font-size: 1.1rem; text-align: justify;">
+                {!! nl2br(e($artikel->konten)) !!}
             </div>
         </div>
     </div>

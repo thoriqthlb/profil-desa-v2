@@ -6,11 +6,10 @@
 <style>
     .page-hero {
         padding: 170px 0 85px;
-        background: #eef1eb;
+        background: #e4ffdb;
     }
 
     .page-hero h1 {
-        /* Diubah menjadi DM Sans agar selaras dengan Beranda dan Profil */
         font-family: 'DM Sans', sans-serif;
         font-weight: 700;
         letter-spacing: -.02em;
@@ -55,7 +54,6 @@
 
     .potensi-index {
         color: var(--sage);
-        /* Diubah menjadi DM Sans */
         font-family: 'DM Sans', sans-serif;
         font-weight: 700;
         font-size: 1.4rem;
@@ -64,7 +62,6 @@
 @endpush
 
 @section('content')
-<!-- Ditambahkan text-center dan flex align-items-center agar posisinya ke tengah -->
 <section class="page-hero text-center">
     <div class="container d-flex flex-column align-items-center">
         <div class="eyebrow mb-3">Eksplorasi Desa</div>
@@ -83,26 +80,21 @@
                 <div class="col-lg-4 col-md-6">
                     <a href="{{ route('potensi-desa.show', $potensi->id) }}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
                         <article class="potensi-card text-start">
-                            <!-- Kode gambar dan isi kartu potensi biarkan tetap di sini -->
+                            @if($potensi->gambar)
+                                <img src="{{ Storage::url($potensi->gambar) }}" class="potensi-img" alt="{{ $potensi->nama_potensi }}">
+                            @else
+                                <div class="potensi-placeholder"><i class="fa-solid fa-image fa-3x"></i></div>
+                            @endif
+
+                            <div class="potensi-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="potensi-index">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-muted"></i>
+                                </div>
+                                <h4 class="mb-2" style="font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -.02em;">{{ $potensi->nama_potensi }}</h4>
+                            </div>
                         </article>
                     </a>
-                        @if($potensi->gambar)
-                            <img src="{{ Storage::url($potensi->gambar) }}" class="potensi-img" alt="{{ $potensi->nama_potensi }}">
-                        @else
-                            <div class="potensi-placeholder"><i class="fa-solid fa-image fa-3x"></i></div>
-                        @endif
-
-                        <div class="potensi-body">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="potensi-index">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                                <i class="fa-solid fa-arrow-up-right-from-square text-muted"></i>
-                            </div>
-                            <h4 class="mb-2" style="font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -.02em;">{{ $potensi->nama_potensi }}</h4>
-                            <p class="text-muted mb-0" style="line-height:1.75;">
-                                {{ $potensi->deskripsi }}
-                            </p>
-                        </div>
-                    </article>
                 </div>
             @empty
                 <div class="col-12 text-center py-5">

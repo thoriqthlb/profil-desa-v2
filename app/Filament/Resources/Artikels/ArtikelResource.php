@@ -19,6 +19,8 @@ class ArtikelResource extends Resource
     protected static ?string $model = Artikel::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $modelLabel = 'Artikel';
+    protected static ?string $pluralModelLabel = 'Artikel';
 
     public static function form(Schema $schema): Schema
     {

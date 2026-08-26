@@ -297,8 +297,8 @@
     <footer class="site-footer">
         <div class="container">
             <div class="row g-5">
+                <!-- BAGAN 1: INFO DESA -->
                 <div class="col-lg-5">
-                    <!-- LOGO DI FOOTER -->
                     <div class="footer-brand mb-3 d-flex align-items-center gap-3">
                         <img src="{{ asset('images/logo.png') }}" alt="Logo Kabupaten Banjarnegara" style="width: 50px; height: auto;">
                         <div class="d-flex flex-column" style="line-height: 1.2;">
@@ -313,11 +313,25 @@
                     </p>
                 </div>
 
-                <div class="col-lg-7 col-md-6">
+                <!-- BAGAN 2: LOKASI -->
+                <div class="col-lg-4 col-md-6">
                     <h5>Lokasi</h5>
                     <div class="footer-info">
-                        <i class="fa-solid fa-location-dot me-2"></i>
-                        {{ $profilFooter->alamat_lengkap ?? 'Alamat kantor desa belum diatur di dalam sistem.' }}
+                        <div class="d-flex">
+                            <i class="fa-solid fa-location-dot mt-1 me-2"></i>
+                            <p class="mb-0">{{ $profilFooter->alamat_lengkap ?? 'Desa Wiramastra, Kecamatan Bawang, Kabupaten Banjarnegara, Jawa Tengah 53471' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BAGAN 3: KONTAK -->
+                <div class="col-lg-3 col-md-6">
+                    <h5>Kontak</h5>
+                    <div class="footer-info">
+                        <div class="d-flex align-items-center">
+                            <i class="fa-solid fa-envelope me-2"></i>
+                            <a href="mailto:pemdes@wiramastra.dummy" class="text-decoration-none" style="color: #aeb9b0;">pemdes@wiramastra.dummy</a>
+                        </div>
                     </div>
                 </div>
 
@@ -331,6 +345,11 @@
             </div>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @stack('scripts')
+</body>
+</html>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')

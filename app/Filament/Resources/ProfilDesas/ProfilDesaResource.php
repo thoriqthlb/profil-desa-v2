@@ -19,6 +19,8 @@ class ProfilDesaResource extends Resource
     protected static ?string $model = ProfilDesa::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $modelLabel = 'Profil Desa';
+    protected static ?string $pluralModelLabel = 'Profil Desa';
 
     public static function form(Schema $schema): Schema
     {
